@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical No. 4 - AngularJS Good Morning</title>
+
+    <!-- AngularJS CDN (AngularJS 1.x - used in labs without CLI setup) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- AngularJS App -->
+<body ng-app="morningApp" ng-controller="MorningCtrl">
+
+    <div class="card">
+        <div class="sun">🌅</div>
+        <h1>{{ greeting }}</h1>
+        <p class="subtitle">{{ message }}</p>
+    </div>
+
+</body>
+<script src="script.js"></script>
+</html>

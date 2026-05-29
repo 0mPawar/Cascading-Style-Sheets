@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  padding: 30px;
+}
+h1 {
+  color: #2c3e50;
+  text-align: center;
+}
+.card {
+  background: white;
+  max-width: 500px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+.card h2 {
+  color: #3498db;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+.field {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.field span:first-child {
+  color: #888;
+}
+.field span:last-child {
+  font-weight: bold;
+  color: #2c3e50;
+}
+.badge {
+  background: #3498db;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+}

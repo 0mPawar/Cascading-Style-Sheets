@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 6 - Data Model View</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="modelApp" ng-controller="ModelCtrl">
+    <h1>Practical No. 6 — Data Model View (One-Way Binding)</h1>
+    <div class="card">
+      <h2>Student Information</h2>
+      <div class="field"><span>Name</span><span>{{ student1.name }}</span></div>
+      <div class="field"><span>Age</span><span>{{ student1.age }}</span></div>
+      <div class="field">
+        <span>Department</span><span>{{ student1.department }}</span>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 9 - AngularJS Events</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body ng-app="eventApp" ng-controller="EventCtrl">
+    <h1>Practical No. 9 — AngularJS Events</h1>
+    <div class="grid">
+      <!-- Mouse Events -->
+      <div class="card">
+        <h2>🖱️ Mouse Events</h2>
+        <div
+          class="event-box"
+          ng-mouseenter="mouseLog='Mouse Enter!'"
+          ng-mouseleave="mouseLog='Mouse Leave!'"
+          ng-mousedown="mouseLog='Mouse Down!'"
+          ng-mouseup="mouseLog='Mouse Up!'"
+          ng-click="mouseLog='Mouse Clicked! ✔'"
+        >
+          Hover / Click Me
+        </div>
+        <div class="log">{{ mouseLog || 'Interact with box above...' }}</div>
+      </div>
+      <!-- ng-click Counter -->
+      <div class="card">
+        <h2>🖱️ ng-click (Counter)</h2>
+        <div class="result">{{ count }}</div>
+        <div style="text-align: center">
+          <button class="counter-btn" ng-click="count = count + 1">
+            ➕ Increment
+          </button>
+          <button
+            class="counter-btn"
+            style="background: #e74c3c"
+            ng-click="count = count - 1"
+          >
+            ➖ Decrement
+          </button>
+          <button
+            class="counter-btn"
+            style="background: #95a5a6"
+            ng-click="count = 0"
+          >
+            🔄 Reset
+          </button>
+        </div>
+      </div>
+      <!-- Key Events -->
+      <div class="card">
+        <h2>⌨️ Key Events</h2>
+        <input
+          type="text"
+          placeholder="Type here..."
+          ng-keydown="keyLog='Key Down: ' + $event.key"
+          ng-keypress="keyPressCount = keyPressCount + 1"
+          ng-keyup="keyLog='Key Up: ' + $event.key"
+        />
+        <div class="log">{{ keyLog || 'Start typing...' }}</div>
+        <div class="log" style="margin-top: 6px">
+          Key Press Count: <b>{{ keyPressCount }}</b>
+        </div>
+      </div>
+      <!-- ng-dblclick -->
+      <div class="card">
+        <h2>🖱️ ng-dblclick</h2>
+        <div
+          class="event-box"
+          ng-dblclick="dblMsg='Double Clicked! 🎉'"
+          style="background: #fff3cd; border-color: #f39c12"
+        >
+          Double-Click Me!
+        </div>
+        <div class="log">{{ dblMsg || 'Double-click the box above...' }}</div>
+      </div>
+      <!-- ng-change -->
+      <div class="card">
+        <h2>📝 ng-change</h2>
+        <input
+          type="text"
+          ng-model="inputVal"
+          ng-change="changeLog='Changed to: ' + inputVal"
+          placeholder="Type to trigger change..."
+        />
+        <div class="log">{{ changeLog || 'Start typing...' }}</div>
+      </div>
+      <!-- ng-mouseover coordinates -->
+      <div class="card">
+        <h2>📍 ng-mousemove (Coordinates)</h2>
+        <div
+          class="event-box"
+          style="height: 80px"
+          ng-mousemove="x=$event.offsetX; y=$event.offsetY"
+        >
+          Move mouse here
+        </div>
+        <div class="log">X: <b>{{ x || 0 }}</b> | Y: <b>{{ y || 0 }}</b></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

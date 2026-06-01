@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 7 - Two-Way Data Binding</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="tableApp" ng-controller="TableCtrl">
+    <h1>Practical No. 10 — Display Data in Table</h1>
+    <div class="container">
+      <h2>Student Marks Table (using ng-repeat)</h2>
+      <div class="search-box">
+        <input
+          type="text"
+          ng-model="search"
+          placeholder="🔍 Search by name or course..."
+        />
+      </div>
+      <table>
+        <tr>
+          <th>Sr. No</th>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Course</th>
+          <th>Marks</th>
+          <th>Result</th>
+        </tr>
+        <tr ng-repeat="s in students | filter:search">
+          <td>{{ $index + 1 }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.rollno }}</td>
+          <td>{{ s.course }}</td>
+          <td>{{ s.marks }}</td>
+          <td>
+            <span class="badge" ng-class="s.marks >= 35 ? 'pass' : 'fail'"
+              >{{ s.marks >= 35 ? 'Pass' : 'Fail' }}</span
+            >
+          </td>
+        </tr>
+      </table>
+      <p style="margin-top: 12px; color: #888; font-size: 13px">
+        Total Students: {{ students.length }}
+      </p>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

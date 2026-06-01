@@ -10,7 +10,7 @@ app.controller("TableCtrl", function ($scope) {
     { name: "Student6", rollno: "106", course: "CO", marks: 65 },
     { name: "Student7", rollno: "107", course: "SE", marks: 55 },
     { name: "Student8", rollno: "108", course: "IF", marks: 31 },
-    { name: "Student9", rollno: "109", course: "CO", marks: 82 },
+    { name: "Student9", rollno: "109", course: "CO", marks: 52 },
     { name: "Student10", rollno: "110", course: "SE", marks: 47 },
   ];
 });

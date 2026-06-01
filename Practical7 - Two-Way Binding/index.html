@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 7 - Two-Way Data Binding</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="twoWayApp" ng-controller="TwoWayCtrl">
+    <h1>Practical No. 7 — Two-Way Data Binding</h1>
+    <div class="card">
+      <h2>🔄 Live Student Form (ng-model)</h2>
+      <label>Student Name:</label>
+      <input
+        type="text"
+        ng-model="student.name"
+        placeholder="Type your name..."
+      />
+      <label>Course:</label>
+      <input
+        type="text"
+        ng-model="student.course"
+        placeholder="Type your course..."
+      />
+      <label>Age:</label>
+      <input type="number" ng-model="student.age" placeholder="Enter age..." />
+      <div class="output-box">
+        <p>👤 Name: <span>{{ student.name || '—' }}</span></p>
+        <p>📘 Course: <span>{{ student.course || '—' }}</span></p>
+        <p>🎂 Age: <span>{{ student.age || '—' }}</span></p>
+      </div>
+      <p style="color: #888; font-size: 13px; margin-top: 12px">
+        ↑ Output updates in real-time as you type — this is Two-Way Data
+        Binding!
+      </p>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

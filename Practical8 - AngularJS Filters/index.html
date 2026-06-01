@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 8 - AngularJS Filters</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body ng-app="filterApp" ng-controller="FilterCtrl">
+    <h1>Practical No. 8 — AngularJS Filters</h1>
+    <div class="grid">
+      <!-- uppercase / lowercase -->
+      <div class="card">
+        <h2>1. uppercase &amp; lowercase</h2>
+        <label>Enter Text:</label>
+        <input type="text" ng-model="text" placeholder="Type something..." />
+        <div class="result">UPPER: <span>{{ text | uppercase }}</span></div>
+        <div class="result" style="margin-top: 8px">
+          lower: <span>{{ text | lowercase }}</span>
+        </div>
+      </div>
+      <!-- currency -->
+      <div class="card">
+        <h2>2. currency Filter</h2>
+        <label>Enter Amount:</label>
+        <input type="number" ng-model="amount" placeholder="e.g. 5000" />
+        <div class="result">Default: <span>{{ amount | currency }}</span></div>
+        <div class="result" style="margin-top: 8px">
+          ₹ Format: <span>{{ amount | currency:"₹" }}</span>
+        </div>
+      </div>
+      <!-- filter -->
+      <div class="card">
+        <h2>3. filter (Search)</h2>
+        <label>Search Student:</label>
+        <input type="text" ng-model="search" placeholder="Search by name..." />
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Marks</th>
+          </tr>
+          <tr ng-repeat="s in students | filter:search">
+            <td>{{ s.name }}</td>
+            <td>{{ s.marks }}</td>
+          </tr>
+        </table>
+      </div>
+      <!-- orderBy -->
+      <div class="card">
+        <h2>4. orderBy Filter</h2>
+        <label>Order by:</label>
+        <select ng-model="orderProp">
+          <option value="name">Name</option>
+          <option value="marks">Marks</option>
+        </select>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Marks</th>
+          </tr>
+          <tr ng-repeat="s in students | orderBy:orderProp">
+            <td>{{ s.name }}</td>
+            <td>{{ s.marks }}</td>
+          </tr>
+        </table>
+      </div>
+      <!-- limitTo -->
+      <div class="card">
+        <h2>5. limitTo Filter</h2>
+        <label>Show top N students:</label>
+        <input type="number" ng-model="limit" min="1" max="5" />
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Marks</th>
+          </tr>
+          <tr ng-repeat="s in students | limitTo:limit">
+            <td>{{ s.name }}</td>
+            <td>{{ s.marks }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 11 - Odd Even Row CSS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="oddEvenApp" ng-controller="OddEvenCtrl">
+    <h1>Practical No. 11 — CSS for Odd &amp; Even Rows</h1>
+    <div class="container">
+        <h2>Student Table — Odd &amp; Even Row Styling (ng-class-odd / ng-class-even)</h2>
+        <table>
+            <tr>
+                <th>Sr. No</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Marks</th>
+                <th>Grade</th>
+            </tr>
+            <tr ng-repeat="s in students" ng-class-odd="'odd-row'" ng-class-even="'even-row'">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.rollno }}</td>
+                <td>{{ s.marks }}</td>
+                <td>{{ s.marks >= 75 ? 'A' : s.marks >= 60 ? 'B' : s.marks >= 35 ? 'C' : 'F' }}</td>
+            </tr>
+        </table>
+        <div class="legend">
+            <div><div class="box" style="background:#d6eaf8;"></div> Odd Rows</div>
+            <div><div class="box" style="background:#d5f5e3;"></div> Even Rows</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

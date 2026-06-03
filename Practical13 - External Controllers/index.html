@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 13 - External Controller</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="extApp" ng-controller="ExternalCtrl">
+    <h1>Practical No. 13 — External Controller in AngularJS</h1>
+    <div class="card">
+      <h2>📋 Message from External Controller</h2>
+      <p style="font-size: 18px; color: #16a085; font-weight: bold">
+        {{ message }}
+      </p>
+
+      <h2>📋 Student Table (with orderBy &amp; uppercase)</h2>
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Marks</th>
+          <th>Grade</th>
+        </tr>
+        <tr ng-repeat="s in students | orderBy:'name'">
+          <td>{{ $index + 1 }}</td>
+          <td>{{ s.name | uppercase }}</td>
+          <td>{{ s.marks }}</td>
+          <td>{{ s.marks >= 75 ? 'A' : s.marks >= 60 ? 'B' : 'C' }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

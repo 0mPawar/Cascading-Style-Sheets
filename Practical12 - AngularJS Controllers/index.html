@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 12 - AngularJS Controllers</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ng-app="ctrlApp">
+    <!-- 1. Basic Controller -->
+    <h1>Practical No. 12 — AngularJS Controller Methods</h1>
+    <div class="grid">
+      <div ng-controller="BasicCtrl" class="card">
+        <h2>1️⃣ Basic Controller</h2>
+        <div class="field"><span>Message</span><span>{{ message }}</span></div>
+        <div class="field">
+          <span>Dictator</span><span>{{ dictator1.name }}</span>
+        </div>
+        <div class="field">
+          <span>Special Rank</span><span>{{ dictator1.special_rank }}</span>
+        </div>
+        <button ng-click="greet()">Click to Greet</button>
+      </div>
+
+      <!-- 2. Nested Controllers -->
+      <div ng-controller="ParentCtrl" class="card">
+        <h2>2️⃣ Nested Controllers (Parent–Child)</h2>
+        <div class="field">
+          <span>Parent Data</span><span>{{ parentMsg }}</span>
+        </div>
+        <div ng-controller="ChildCtrl">
+          <div class="field">
+            <span>Child Data</span><span>{{ childMsg }}</span>
+          </div>
+          <div class="field">
+            <span>From Parent</span><span>{{ parentMsg }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Filter in Controller -->
+      <div ng-controller="FilterCtrl" class="card">
+        <h2>3️⃣ Filters in Controller (orderBy + uppercase)</h2>
+        <table>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Special Rank</th>
+          </tr>
+          <tr ng-repeat="dictator in dictator2 | orderBy:'marks':true">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ dictator.name | uppercase }}</td>
+            <td>{{ dictator.special_rank | number }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 4. Controller with Function -->
+      <div ng-controller="CalcCtrl" class="card">
+        <h2>4️⃣ Controller with Functions</h2>
+        <div class="field"><span>Name</span><span>{{ name }}</span></div>
+        <div class="field"><span>Result</span><span>{{ result }}</span></div>
+        <button ng-click="calculate()">Calculate Grade</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

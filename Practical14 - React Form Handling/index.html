@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 14 - React Form</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Practical No. 14 — React Form Data Handling</h1>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function RegistrationForm() {
+        const [formData, setFormData] = useState({
+          name: "",
+          email: "",
+          age: "",
+          course: "",
+          password: "",
+        });
+
+        const [submitted, setSubmitted] = useState(false);
+
+        const handleChange = (e) => {
+          setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+          });
+        };
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          setSubmitted(true);
+        };
+
+        const handleReset = () => {
+          setFormData({
+            name: "",
+            email: "",
+            age: "",
+            course: "",
+            password: "",
+          });
+
+          setSubmitted(false);
+        };
+
+        return (
+          <div className="card">
+            <h2>📋 Student Registration Form</h2>
+
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter email"
+            />
+
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter age"
+            />
+
+            <label>Course</label>
+            <select
+              name="course"
+              value={formData.course}
+              onChange={handleChange}
+            >
+              <option value="">-- Select Course --</option>
+              <option value="Computer Engineering">Computer Engineering</option>
+              <option value="Information Technology">
+                Information Technology
+              </option>
+              <option value="Civil Engineering">Civil Engineering</option>
+            </select>
+
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+            />
+
+            <button onClick={handleSubmit}>✔ Submit</button>
+
+            <button
+              onClick={handleReset}
+              style={{
+                background: "#95a5a6",
+                marginTop: "10px",
+              }}
+            >
+              ✖ Reset
+            </button>
+
+            {submitted && (
+              <div className="result">
+                <h3>✅ Form Submitted Successfully!</h3>
+
+                <p>
+                  Name: <span>{formData.name}</span>
+                </p>
+
+                <p>
+                  Email: <span>{formData.email}</span>
+                </p>
+
+                <p>
+                  Age: <span>{formData.age}</span>
+                </p>
+
+                <p>
+                  Course: <span>{formData.course}</span>
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        <RegistrationForm />,
+      );
+    </script>
+  </body>
+</html>

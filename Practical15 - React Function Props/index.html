@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 15 - React Props Function</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 15 — Passing Function Arguments into React Components</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      // ---- Child Component 1: Receives function as prop and calls with argument ----
+      function GreetChild(props) {
+        return (
+          <div className="card">
+            <h2>1️⃣ Function Passed as Prop</h2>
+            <p>Child calls parent's function with argument:</p>
+            <button onClick={() => props.greet("Om")}>Greet Om</button>
+            <button onClick={() => props.greet("Shreyash")}>
+              Greet Shreyash
+            </button>
+            <div className="output">{props.message || "Click a button!"}</div>
+          </div>
+        );
+      }
+
+      // ---- Child Component 2: Counter with function prop ----
+      function CounterChild(props) {
+        return (
+          <div className="card">
+            <h2>2️⃣ Counter using Function Prop</h2>
+            <div className="counter">{props.count}</div>
+            <button onClick={() => props.updateCount(1)}>➕ +1</button>
+            <button onClick={() => props.updateCount(5)}>➕ +5</button>
+            <button
+              onClick={() => props.updateCount(-1)}
+              style={{ background: "#e74c3c" }}
+            >
+              ➖ -1
+            </button>
+            <button
+              onClick={() => props.resetCount()}
+              style={{ background: "#95a5a6" }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+        );
+      }
+
+      // ---- Child Component 3: Multiple arguments ----
+      function MultiArgChild(props) {
+        return (
+          <div className="card">
+            <h2>3️⃣ Multiple Arguments</h2>
+            <p>Pass name + course together:</p>
+            <button onClick={() => props.showInfo("Sneha", "Computer Engg.")}>
+              Student 1
+            </button>
+            <button onClick={() => props.showInfo("Rahul", "IT")}>
+              Student 2
+            </button>
+            <div className="output">{props.info || "Click to see info!"}</div>
+          </div>
+        );
+      }
+
+      // ---- Parent Component ----
+      function Parent() {
+        const [message, setMessage] = useState("");
+        const [count, setCount] = useState(0);
+        const [info, setInfo] = useState("");
+
+        const greet = (name) => setMessage(`Hello, ${name}! 👋`);
+        const updateCount = (val) => setCount((prev) => prev + val);
+        const resetCount = () => setCount(0);
+        const showInfo = (name, course) => setInfo(`${name} — ${course}`);
+
+        return (
+          <div className="grid">
+            <GreetChild greet={greet} message={message} />
+            <CounterChild
+              count={count}
+              updateCount={updateCount}
+              resetCount={resetCount}
+            />
+            <MultiArgChild showInfo={showInfo} info={info} />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Parent />);
+    </script>
+  </body>
+</html>

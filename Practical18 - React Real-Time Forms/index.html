@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 18 - React Real-Time Form</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 18 — Real-Time Form using React Components</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function FeedbackForm() {
+        const [form, setForm] = useState({ name: "", email: "", message: "" });
+        const [submitted, setSubmitted] = useState(false);
+
+        const handleChange = (e) =>
+          setForm({ ...form, [e.target.name]: e.target.value });
+
+        return (
+          <div className="card">
+            <h2>💬 Feedback Form</h2>
+            {/* Live Preview */}
+            <div className="preview">
+              <b>Name:</b> {form.name || "—"}
+              <br />
+              <b>Email:</b> {form.email || "—"}
+              <br />
+              <b>Message:</b> {form.message || "—"}
+            </div>
+            <label>Your Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter name"
+            />
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Enter email"
+            />
+            <label>Feedback Message</label>
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              rows="3"
+              placeholder="Write feedback..."
+            />
+            <button onClick={() => setSubmitted(true)}>
+              📤 Submit Feedback
+            </button>
+            {submitted && (
+              <div className="success">
+                <h3>✅ Thank You, {form.name}!</h3>
+                <p>Email: {form.email}</p>
+                <p>Message: {form.message}</p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      function ContactForm() {
+        const [form, setForm] = useState({
+          name: "",
+          phone: "",
+          subject: "",
+          dept: "",
+        });
+        const [submitted, setSubmitted] = useState(false);
+
+        const handleChange = (e) =>
+          setForm({ ...form, [e.target.name]: e.target.value });
+
+        return (
+          <div className="card">
+            <h2>📞 Contact Form</h2>
+            <div className="preview">
+              <b>Name:</b> {form.name || "—"} | <b>Phone:</b>{" "}
+              {form.phone || "—"}
+              <br />
+              <b>Dept:</b> {form.dept || "—"} | <b>Subject:</b>{" "}
+              {form.subject || "—"}
+            </div>
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter name"
+            />
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Enter phone"
+            />
+            <label>Department</label>
+            <select name="dept" value={form.dept} onChange={handleChange}>
+              <option value="">-- Select Department --</option>
+              <option>Computer Engineering</option>
+              <option>Information Technology</option>
+              <option>Civil Engineering</option>
+            </select>
+            <label>Subject</label>
+            <input
+              type="text"
+              name="subject"
+              value={form.subject}
+              onChange={handleChange}
+              placeholder="Subject"
+            />
+            <button onClick={() => setSubmitted(true)}>📤 Submit</button>
+            {submitted && (
+              <div className="success">
+                <h3>✅ Form Submitted!</h3>
+                <p>
+                  {form.name} | {form.phone} | {form.dept}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="wrapper">
+            <FeedbackForm />
+            <ContactForm />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

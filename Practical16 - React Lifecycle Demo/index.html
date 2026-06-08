@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 16 - React Lifecycle</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 16 — React Lifecycle + Function Props</h1>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      // Child component that demonstrates Lifecycle phases
+      function LifecycleDemo({ count, onUnmount }) {
+        // MOUNTING: runs once when component mounts
+        useEffect(() => {
+          addLog("✅ MOUNTING: Component mounted (componentDidMount)");
+          return () => {
+            // UNMOUNTING: runs when component is removed
+            addLog(
+              "❌ UNMOUNTING: Component will unmount (componentWillUnmount)",
+            );
+          };
+        }, []);
+
+        // UPDATING: runs every time count changes
+        useEffect(() => {
+          addLog(`🔄 UPDATING: Count updated to ${count} (componentDidUpdate)`);
+        }, [count]);
+
+        return (
+          <div>
+            <div className="counter-display">{count}</div>
+            <div className="phase-box mount">
+              🟢 <b>Mounting:</b> Component created and added to DOM
+            </div>
+            <div className="phase-box update">
+              🟡 <b>Updating:</b> State changed — component re-rendered
+            </div>
+            <div className="phase-box unmount">
+              🔴 <b>Unmounting:</b> Component removed from DOM
+            </div>
+          </div>
+        );
+      }
+
+      let logEl;
+      function addLog(msg) {
+        if (logEl) {
+          logEl.innerHTML += msg + "<br>";
+          logEl.scrollTop = logEl.scrollHeight;
+        }
+      }
+
+      function App() {
+        const [count, setCount] = useState(0);
+        const [show, setShow] = useState(true);
+
+        return (
+          <div className="card">
+            <h2>⚛️ React Component Lifecycle</h2>
+
+            {show ? (
+              <LifecycleDemo count={count} />
+            ) : (
+              <div className="phase-box unmount">
+                Component has been unmounted from DOM!
+              </div>
+            )}
+
+            <div style={{ textAlign: "center", marginTop: "16px" }}>
+              <button onClick={() => setCount((c) => c + 1)}>
+                ➕ Increment (Update)
+              </button>
+              <button
+                onClick={() => setCount(0)}
+                style={{ background: "#95a5a6" }}
+              >
+                🔄 Reset
+              </button>
+              <button className="red" onClick={() => setShow((s) => !s)}>
+                {show ? "❌ Unmount" : "✅ Mount"} Component
+              </button>
+            </div>
+
+            <div
+              style={{ marginTop: "16px", fontWeight: "bold", color: "#555" }}
+            >
+              📋 Lifecycle Log:
+            </div>
+            <div className="log-box" ref={(el) => (logEl = el)}>
+              Open this page to see lifecycle events...
+              <br />
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

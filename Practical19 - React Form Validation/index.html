@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 19 - React Form Validation</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 19 — React Form Validation</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function ValidatedForm() {
+        const [form, setForm] = useState({
+          name: "",
+          email: "",
+          mobile: "",
+          age: "",
+          course: "",
+          password: "",
+        });
+        const [errors, setErrors] = useState({});
+        const [submitted, setSubmitted] = useState(false);
+
+        const validate = () => {
+          let errs = {};
+          if (!form.name.trim()) errs.name = "⚠ Name is required.";
+          else if (form.name.length < 3)
+            errs.name = "⚠ Name must be at least 3 characters.";
+
+          if (!form.email.trim()) errs.email = "⚠ Email is required.";
+          else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+            errs.email = "⚠ Enter a valid email.";
+
+          if (!form.mobile.trim()) errs.mobile = "⚠ Mobile is required.";
+          else if (!/^\d{10}$/.test(form.mobile))
+            errs.mobile = "⚠ Enter a valid 10-digit mobile number.";
+
+          if (!form.age) errs.age = "⚠ Age is required.";
+          else if (form.age < 15 || form.age > 30)
+            errs.age = "⚠ Age must be between 15 and 30.";
+
+          if (!form.course) errs.course = "⚠ Please select a course.";
+
+          if (!form.password) errs.password = "⚠ Password is required.";
+          else if (form.password.length < 6)
+            errs.password = "⚠ Password must be at least 6 characters.";
+
+          return errs;
+        };
+
+        const handleChange = (e) => {
+          setForm({ ...form, [e.target.name]: e.target.value });
+          setErrors({ ...errors, [e.target.name]: "" });
+        };
+
+        const handleSubmit = () => {
+          const errs = validate();
+          if (Object.keys(errs).length > 0) {
+            setErrors(errs);
+            setSubmitted(false);
+          } else {
+            setSubmitted(true);
+          }
+        };
+
+        const Field = ({ name, type = "text", placeholder }) => (
+          <>
+            <input
+              type={type}
+              name={name}
+              value={form[name]}
+              onChange={handleChange}
+              placeholder={placeholder}
+              className={errors[name] ? "invalid" : form[name] ? "valid" : ""}
+            />
+            {errors[name] && <div className="error">{errors[name]}</div>}
+          </>
+        );
+
+        return (
+          <div className="card">
+            <h2>📝 Student Enrollment Form (with Validation)</h2>
+
+            <label>Full Name *</label>
+            <Field name="name" placeholder="Enter full name" />
+
+            <label>Email Address *</label>
+            <Field name="email" type="email" placeholder="Enter email" />
+
+            <label>Mobile Number *</label>
+            <Field name="mobile" placeholder="Enter 10-digit mobile" />
+
+            <label>Age *</label>
+            <Field name="age" type="number" placeholder="Age (15–30)" />
+
+            <label>Course *</label>
+            <select
+              name="course"
+              value={form.course}
+              onChange={handleChange}
+              className={errors.course ? "invalid" : form.course ? "valid" : ""}
+            >
+              <option value="">-- Select Course --</option>
+              <option>Computer Engineering</option>
+              <option>Information Technology</option>
+              <option>Civil Engineering</option>
+            </select>
+            {errors.course && <div className="error">{errors.course}</div>}
+
+            <label>Password *</label>
+            <Field
+              name="password"
+              type="password"
+              placeholder="Min 6 characters"
+            />
+
+            <button onClick={handleSubmit}>✔ Submit Form</button>
+
+            {submitted && (
+              <div className="success-box">
+                <h3>✅ Form Validated & Submitted!</h3>
+                <p>
+                  <b>Name:</b> {form.name}
+                </p>
+                <p>
+                  <b>Email:</b> {form.email}
+                </p>
+                <p>
+                  <b>Mobile:</b> {form.mobile}
+                </p>
+                <p>
+                  <b>Age:</b> {form.age}
+                </p>
+                <p>
+                  <b>Course:</b> {form.course}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        <ValidatedForm />,
+      );
+    </script>
+  </body>
+</html>

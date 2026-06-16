@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 20 - React List Key</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 20 — List: With Key vs Without Key in React</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      // Without Key
+      function ListWithoutKey() {
+        const students = ["Amit", "Priya", "Rahul", "Sneha", "Karan"];
+        return (
+          <div className="card">
+            <h2 className="h-red">❌ List WITHOUT Key</h2>
+            <div className="warn">
+              ⚠ No key prop — React may re-render incorrectly. Console will show
+              warning.
+            </div>
+            <ul>
+              {students.map((name) => (
+                <li className="item-no-key">{name}</li> // No key here
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      // With Key (index)
+      function ListWithKey() {
+        const students = ["Amit", "Priya", "Rahul", "Sneha", "Karan"];
+        return (
+          <div className="card">
+            <h2 className="h-green">✅ List WITH Key (index)</h2>
+            <div className="tip">
+              ✔ key={"{index}"} used — React tracks each item correctly.
+            </div>
+            <ul>
+              {students.map((name, index) => (
+                <li key={index} className="item-key">
+                  <span>
+                    #{index + 1} {name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      // Dynamic List with Add/Delete
+      function DynamicList() {
+        const [items, setItems] = useState([
+          { id: 1, name: "Amit" },
+          { id: 2, name: "Priya" },
+          { id: 3, name: "Rahul" },
+        ]);
+        const [input, setInput] = useState("");
+
+        const addItem = () => {
+          if (!input.trim()) return;
+          setItems([...items, { id: Date.now(), name: input }]);
+          setInput("");
+        };
+
+        const deleteItem = (id) => setItems(items.filter((i) => i.id !== id));
+
+        return (
+          <div className="card">
+            <h2 className="h-blue">➕ Dynamic List (Unique key with id)</h2>
+            <div className="add-row">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Enter name..."
+              />
+              <button onClick={addItem}>Add</button>
+            </div>
+            <ul>
+              {items.map((item) => (
+                <li key={item.id} className="item-delete">
+                  <span>{item.name}</span>
+                  <button onClick={() => deleteItem(item.id)}>🗑 Delete</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="wrapper">
+            <ListWithoutKey />
+            <ListWithKey />
+            <DynamicList />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

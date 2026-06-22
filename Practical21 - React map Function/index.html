@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practical No. 21 - React map() Function</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Practical No. 21 — Render List using map() in React</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+      // 1. Basic Student Name List using map()
+      function StudentList() {
+          const names = ["Aarav", "Priya", "Rohan", "Sneha", "Karan", "Neha", "Amit"];
+          return (
+              <div className="card">
+                  <h2>1️⃣ Student Name List (map)</h2>
+                  <div className="code-box">
+                      <span className="kw">const</span> names = [<span className="str">"Aarav"</span>, ...];<br/>
+                      names.<span className="fn">map</span>((name, index) =&gt; (<br/>
+                      &nbsp;&lt;li <span className="kw">key</span>={"{index}"}>{"{name}"}&lt;/li&gt;<br/>
+                      ))
+                  </div>
+                  <ul>
+                      {names.map((name, index) => (
+                          <li key={index}>
+                              <span className="idx">#{index + 1}</span> {name}
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          );
+      }
+
+      // 2. Subjects with index numbers
+      function SubjectList() {
+          const subjects = ["Mathematics", "Physics", "Chemistry", "English", "Computer Science"];
+          return (
+              <div className="card">
+                  <h2>2️⃣ Subjects with Index Numbers</h2>
+                  <div className="code-box">
+                      subjects.<span className="fn">map</span>((sub, index) =&gt; (<br/>
+                      &nbsp;&lt;li key={"{index}"}>{"{index+1}. {sub}"}&lt;/li&gt;<br/>
+                      ))
+                  </div>
+                  <ul>
+                      {subjects.map((sub, index) => (
+                          <li key={index} className="subject-li">
+                              <span className="idx">{index + 1}.</span> {sub}
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          );
+      }
+
+      // 3. Filtered List — only names starting with 'A'
+      function FilteredList() {
+          const names = ["Aarav", "Priya", "Anita", "Rohan", "Amit", "Sneha", "Arjun"];
+          const filtered = names.filter(n => n.startsWith("A"));
+          return (
+              <div className="card">
+                  <h2>3️⃣ Filtered List (Starting with 'A')</h2>
+                  <div className="code-box">
+                      names.<span className="fn">filter</span>(n =&gt; n.<span className="fn">startsWith</span>(<span className="str">"A"</span>))<br/>
+                      &nbsp;&nbsp;.<span className="fn">map</span>((name, index) =&gt; (<br/>
+                      &nbsp;&nbsp;&nbsp;&lt;li key={"{index}"}>{"{name}"}&lt;/li&gt;<br/>
+                      &nbsp;&nbsp;))
+                  </div>
+                  <ul>
+                      {filtered.map((name, index) => (
+                          <li key={index} className="filtered-li">
+                              <span className="idx">✅</span> {name}
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          );
+      }
+
+      // 4. Object Array — Student details with map
+      function StudentDetails() {
+          const students = [
+              { id: 1, name: "Amit Sharma",  course: "CO", marks: 88 },
+              { id: 2, name: "Priya Patil",  course: "IF", marks: 92 },
+              { id: 3, name: "Rahul Desai",  course: "CO", marks: 74 },
+              { id: 4, name: "Sneha Joshi",  course: "SE", marks: 67 },
+          ];
+          return (
+              <div className="card">
+                  <h2>4️⃣ Object Array with map()</h2>
+                  <div className="code-box">
+                      students.<span className="fn">map</span>((s) =&gt; (<br/>
+                      &nbsp;&lt;li key={"{s.id}"}>{"{s.name} — {s.marks}"}&lt;/li&gt;<br/>
+                      ))
+                  </div>
+                  <ul>
+                      {students.map((s) => (
+                          <li key={s.id}>
+                              <span className="idx">#{s.id}</span>
+                              {s.name} &nbsp;|&nbsp; {s.course} &nbsp;|&nbsp; <b>{s.marks}</b>
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          );
+      }
+
+      function App() {
+          return (
+              <div className="wrapper">
+                  <StudentList />
+                  <SubjectList />
+                  <FilteredList />
+                  <StudentDetails />
+              </div>
+          );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+  </body>
+</html>

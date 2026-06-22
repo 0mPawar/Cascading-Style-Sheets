@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Practical No. 23 - Real-Time Chat App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+</head>
+<body>
+    <h1>⚛️ Practical No. 23 — <span>Real-Time Chat Application</span> (React)</h1>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        const USERS = [
+            { id: 1, name: "Person 1",  color: "#e74c3c", emoji: "A" },
+            { id: 2, name: "Person 2", color: "#8e44ad", emoji: "P" },
+            { id: 3, name: "Person 3", color: "#27ae60", emoji: "R" },
+            { id: 4, name: "Person 4", color: "#e67e22", emoji: "S" },
+        ];
+
+        const INITIAL_MESSAGES = [
+            { id: 1, text: "Hey! Welcome to the Chat App 👋", sender: "Priya", time: "10:00 AM", type: "received" },
+            { id: 2, text: "Thanks! This is built using React ⚛️", sender: "Me", time: "10:01 AM", type: "sent" },
+            { id: 3, text: "Looks great! All practicals done? 😄", sender: "Priya", time: "10:02 AM", type: "received" },
+            { id: 4, text: "Almost! Just Practical 23 left 😅", sender: "Me", time: "10:03 AM", type: "sent" },
+        ];
+
+        function getTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function ChatApp() {
+            const [messages, setMessages] = useState(INITIAL_MESSAGES);
+            const [input, setInput]       = useState('');
+            const [activeUser, setActiveUser] = useState(USERS[0]);
+            const [sender, setSender]     = useState('Me');
+            const messagesEndRef = useRef(null);
+
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, [messages]);
+
+            const sendMessage = () => {
+                if (!input.trim()) return;
+                const newMsg = {
+                    id: Date.now(),
+                    text: input,
+                    sender: sender,
+                    time: getTime(),
+                    type: sender === 'Me' ? 'sent' : 'received'
+                };
+                setMessages([...messages, newMsg]);
+                setInput('');
+            };
+
+            const handleKey = (e) => {
+                if (e.key === 'Enter') sendMessage();
+            };
+
+            return (
+                <div className="app-wrapper">
+                    {/* Sidebar */}
+                    <div className="sidebar">
+                        <h3>💬 Contacts</h3>
+                        {USERS.map(user => (
+                            <div key={user.id}
+                                className={`user-item ${activeUser.id === user.id ? 'active' : ''}`}
+                                onClick={() => setActiveUser(user)}>
+                                <div className="avatar" style={{background: user.color}}>{user.emoji}</div>
+                                <span className="user-name">{user.name}</span>
+                                <div className="online-dot"></div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Chat Area */}
+                    <div className="chat-area">
+                        {/* Header */}
+                        <div className="chat-header">
+                            <div className="avatar" style={{background: activeUser.color, width:40, height:40, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', color:'white', fontWeight:'bold'}}>
+                                {activeUser.emoji}
+                            </div>
+                            <div className="chat-header-info">
+                                <h3>{activeUser.name}</h3>
+                                <p>● Online</p>
+                            </div>
+                        </div>
+
+                        {/* Messages */}
+                        <div className="messages">
+                            {messages.map(msg => (
+                                <div key={msg.id} className={`msg ${msg.type}`}>
+                                    <div>
+                                        <div className="msg-time">{msg.sender} · {msg.time}</div>
+                                        <div className={`bubble ${msg.type}`}>{msg.text}</div>
+                                    </div>
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        {/* Sender toggle */}
+                        <div className="sender-toggle">
+                            <span>Sending as:</span>
+                            <button className={`sender-btn ${sender === 'Me' ? 'active' : ''}`} onClick={() => setSender('Me')}>Me</button>
+                            <button className={`sender-btn ${sender === activeUser.name ? 'active' : ''}`} onClick={() => setSender(activeUser.name)}>{activeUser.name}</button>
+                        </div>
+
+                        {/* Input */}
+                        <div className="input-area">
+                            <input
+                                value={input}
+                                onChange={e => setInput(e.target.value)}
+                                onKeyDown={handleKey}
+                                placeholder="Type a message and press Enter..." />
+                            <button className="send-btn" onClick={sendMessage}>➤</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<ChatApp />);
+    </script>
+</body>
+</html>
